@@ -33,8 +33,7 @@ struct ProjectListView: View {
             }
             .navigationTitle("Projects")
             .navigationDestination(for: String.self) { projectName in
-                // SessionView placeholder — implemented in Task 4
-                Text("Session: \(projectName)")
+                SessionView(projectName: projectName, ssh: ssh)
             }
         }
         .task { await loadProjects() }

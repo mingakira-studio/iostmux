@@ -1,5 +1,6 @@
 import Foundation
 import Citadel
+import Crypto
 import NIO
 
 @MainActor
@@ -10,15 +11,23 @@ class SSHService: ObservableObject {
     // Shell state — set during openShell, used by send/sendBytes
     nonisolated(unsafe) private var _ttyWriter: TTYStdinWriter?
 
+    /// Build authentication method from stored key
+    private func authMethod() throws -> SSHAuthenticationMethod {
+        guard let keyData = KeychainHelper.loadPrivateKey() else {
+            throw SSHError.noKey
+        }
+        // Try Ed25519 first (most common modern key type)
+        let privateKey = try Curve25519.Signing.PrivateKey(sshEd25519: keyData)
+        return .ed25519(username: Config.sshUser, privateKey: privateKey)
+    }
+
     /// Connect to the SSH server
     func connect() async throws {
+        let auth = try authMethod()
         client = try await SSHClient.connect(
             host: Config.sshHost,
             port: Int(Config.sshPort),
-            authenticationMethod: .passwordBased(
-                username: Config.sshUser,
-                password: "" // Placeholder — Task 6 implements key auth
-            ),
+            authenticationMethod: auth,
             hostKeyValidator: .acceptAnything(),
             reconnect: .never
         )
@@ -109,11 +118,13 @@ class SSHService: ObservableObject {
 enum SSHError: LocalizedError {
     case notConnected
     case noActiveShell
+    case noKey
 
     var errorDescription: String? {
         switch self {
         case .notConnected: return "Not connected to SSH server"
         case .noActiveShell: return "No active shell session"
+        case .noKey: return "No SSH key configured"
         }
     }
 }

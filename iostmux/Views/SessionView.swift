@@ -6,9 +6,11 @@ struct SessionView: View {
     @ObservedObject var ssh: SSHService
 
     @State private var terminalView: TerminalView?
-    @State private var isCompactMode = false
+    @State private var isCompactMode = true
     @State private var isConnecting = true
     @State private var connectionError: String?
+    @State private var filter = OutputFilter()
+    @State private var compactLines: [String] = []
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -26,15 +28,41 @@ struct SessionView: View {
                     Button("Back") { dismiss() }
                 }
             } else {
-                TerminalViewWrapper(
-                    onTerminalCreated: { tv in self.terminalView = tv },
-                    onUserInput: { bytes in
-                        Task { try? await ssh.sendBytes(bytes) }
-                    },
-                    onSizeChanged: { cols, rows in
-                        Task { try? await ssh.sendWindowChange(cols: cols, rows: rows) }
+                // Dual-buffer: both views always present, toggle visibility
+                ZStack {
+                    // Raw terminal — always alive
+                    TerminalViewWrapper(
+                        onTerminalCreated: { tv in self.terminalView = tv },
+                        onUserInput: { bytes in
+                            Task { try? await ssh.sendBytes(bytes) }
+                        },
+                        onSizeChanged: { cols, rows in
+                            Task { try? await ssh.sendWindowChange(cols: cols, rows: rows) }
+                        }
+                    )
+                    .opacity(isCompactMode ? 0 : 1)
+
+                    // Compact filtered view
+                    ScrollViewReader { proxy in
+                        ScrollView {
+                            LazyVStack(alignment: .leading, spacing: 2) {
+                                ForEach(Array(compactLines.enumerated()), id: \.offset) { idx, line in
+                                    Text(line)
+                                        .font(.system(.body, design: .default))
+                                        .foregroundStyle(.primary)
+                                        .id(idx)
+                                }
+                            }
+                            .padding()
+                        }
+                        .onChange(of: compactLines.count) { _, newCount in
+                            if newCount > 0 {
+                                proxy.scrollTo(newCount - 1, anchor: .bottom)
+                            }
+                        }
                     }
-                )
+                    .opacity(isCompactMode ? 1 : 0)
+                }
             }
         }
         .navigationTitle(projectName)
@@ -56,14 +84,25 @@ struct SessionView: View {
     private func connect() async {
         isConnecting = true
         connectionError = nil
-        do {
-            ssh.openShell(project: projectName) { data in
-                DispatchQueue.main.async {
-                    let bytes = [UInt8](data)
-                    terminalView?.feed(byteArray: ArraySlice(bytes))
+        ssh.openShell(project: projectName) { data in
+            DispatchQueue.main.async {
+                // Always feed raw terminal
+                let bytes = [UInt8](data)
+                terminalView?.feed(byteArray: ArraySlice(bytes))
+
+                // Also filter for compact view
+                let text = String(data: data, encoding: .utf8) ?? ""
+                let lines = text.split(separator: "\n", omittingEmptySubsequences: false)
+                for line in lines {
+                    if filter.shouldShow(line: String(line)) {
+                        compactLines.append(filter.stripANSI(String(line)))
+                        if compactLines.count > 500 {
+                            compactLines.removeFirst(100)
+                        }
+                    }
                 }
             }
-            isConnecting = false
         }
+        isConnecting = false
     }
 }

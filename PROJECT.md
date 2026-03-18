@@ -30,8 +30,8 @@
   - [x] 验证 build 通过（Swift 5 mode，Swift 6 concurrency 后续优化）
 - [x] 项目列表页（ProjectListView: 目录列表 + session 状态）(2026-03-18)
 - [x] 终端视图（SwiftTerm UIViewRepresentable + SessionView）(2026-03-18)
-- [>] 输出过滤状态机（compact/raw 双缓冲切换）
-- [ ] SSH Key 认证 + Keychain 存储 + 首次设置页
+- [x] 输出过滤状态机（compact/raw 双缓冲切换）(2026-03-18)
+- [>] SSH Key 认证 + Keychain 存储 + 首次设置页
 - [ ] 用户输入接线 + PTY 尺寸协商
 - [ ] 语音输入（Speech framework, 中英自动识别）
 - [ ] 手势键盘（底部上滑呼出，特殊键 + 快捷命令）
@@ -55,3 +55,4 @@
 - [auto-gtd] 轮次 1: 「Xcode 项目搭建 + 依赖集成」 ✅ (2026-03-18 10:43)
 - [auto-gtd] 轮次 2: 「SSH 服务层」 ✅ (2026-03-18 11:30)
 - [auto-gtd] 轮次 3: 「项目列表页」 ✅ (2026-03-18 11:32)
+- [auto-gtd] 轮次 4: 「终端视图」 ✅ (2026-03-18 11:37)

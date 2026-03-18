@@ -20,3 +20,4 @@
 - 11:39 [project-next] 完成「输出过滤状态机」, 设置 NEXT=SSH Key 认证
 - 11:42 [project-next] 完成「SSH Key 认证」, 设置 NEXT=用户输入接线
 - 11:42 [project-next] 完成「用户输入接线」(已在 Task 4 实现), 设置 NEXT=语音输入
+- 11:43 [project-next] 完成「语音输入」, 设置 NEXT=手势键盘

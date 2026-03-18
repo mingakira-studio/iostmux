@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0FE1720E3711517A2A1AAEEF /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = D8FA61509CBB4908CC50BD80 /* SwiftTerm */; };
 		14DA06C8FA91F4BBF9DA2A86 /* iostmuxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF434C2F6CD0BBC78A7C91E /* iostmuxApp.swift */; };
+		2C2FC672DC242EAC7B4BD6F0 /* VoiceInputButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870516E7D4B76506749F00BE /* VoiceInputButton.swift */; };
 		46DD88C85BFFE5FDFCD691DD /* OutputFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F5B624ADCC768F00A9025 /* OutputFilter.swift */; };
 		532B3EC60563080C8474D618 /* KeySetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D28ADA3CFF98C62C6DB31 /* KeySetupView.swift */; };
 		672D58AE40B4F7B32418E882 /* SSHService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0307F39102CE1DD54926BC19 /* SSHService.swift */; };
@@ -27,6 +28,7 @@
 		458D28ADA3CFF98C62C6DB31 /* KeySetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySetupView.swift; sourceTree = "<group>"; };
 		6A60B57A7CCDD5B32599D382 /* iostmux.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = iostmux.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		753A3043866F33BDB0FE9BD1 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
+		870516E7D4B76506749F00BE /* VoiceInputButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceInputButton.swift; sourceTree = "<group>"; };
 		898F5B624ADCC768F00A9025 /* OutputFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputFilter.swift; sourceTree = "<group>"; };
 		8A45B17ADE5DF57B1737520F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		8E418B111A04E0A671611950 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				753A3043866F33BDB0FE9BD1 /* ProjectListView.swift */,
 				9700AA91EBB8A187BD39B18B /* SessionView.swift */,
 				CC01FFA5CB342C9E16E22E1C /* TerminalViewWrapper.swift */,
+				870516E7D4B76506749F00BE /* VoiceInputButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 				672D58AE40B4F7B32418E882 /* SSHService.swift in Sources */,
 				F2D0232025C495E8D625DD02 /* SessionView.swift in Sources */,
 				CA803DE17D36F5A7A9DF82A5 /* TerminalViewWrapper.swift in Sources */,
+				2C2FC672DC242EAC7B4BD6F0 /* VoiceInputButton.swift in Sources */,
 				14DA06C8FA91F4BBF9DA2A86 /* iostmuxApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

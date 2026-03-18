@@ -29,8 +29,8 @@
   - [x] 添加交互式 shell 方法（withTTY + send + close）
   - [x] 验证 build 通过（Swift 5 mode，Swift 6 concurrency 后续优化）
 - [x] 项目列表页（ProjectListView: 目录列表 + session 状态）(2026-03-18)
-- [>] 终端视图（SwiftTerm UIViewRepresentable + SessionView）
-- [ ] 输出过滤状态机（compact/raw 双缓冲切换）
+- [x] 终端视图（SwiftTerm UIViewRepresentable + SessionView）(2026-03-18)
+- [>] 输出过滤状态机（compact/raw 双缓冲切换）
 - [ ] SSH Key 认证 + Keychain 存储 + 首次设置页
 - [ ] 用户输入接线 + PTY 尺寸协商
 - [ ] 语音输入（Speech framework, 中英自动识别）
@@ -54,3 +54,4 @@
 - [adhoc] 修改了 /project-next 技能（Step 2a-2: 自动检查 superpowers plan）和新建了 /auto-gtd 技能
 - [auto-gtd] 轮次 1: 「Xcode 项目搭建 + 依赖集成」 ✅ (2026-03-18 10:43)
 - [auto-gtd] 轮次 2: 「SSH 服务层」 ✅ (2026-03-18 11:30)
+- [auto-gtd] 轮次 3: 「项目列表页」 ✅ (2026-03-18 11:32)

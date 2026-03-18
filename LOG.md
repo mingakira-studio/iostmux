@@ -16,3 +16,4 @@
   - Citadel withTTY 替代 withPTY（PseudoTerminalRequest init 为 internal）
   - Swift 6 strict concurrency 降级为 Swift 5（v1 快速原型）
 - 11:32 [project-next] 完成「项目列表页」, 设置 NEXT=终端视图
+- 11:37 [project-next] 完成「终端视图」, 设置 NEXT=输出过滤状态机

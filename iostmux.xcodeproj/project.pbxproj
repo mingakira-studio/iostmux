@@ -14,6 +14,8 @@
 		A1AB801121DB19A1FD3D7237 /* Citadel in Frameworks */ = {isa = PBXBuildFile; productRef = E647007AA6AE3220C9353F2B /* Citadel */; };
 		BAC1C78E6E19CF4E02ECA020 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E418B111A04E0A671611950 /* Project.swift */; };
 		C426A25CF710071FBB113D04 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753A3043866F33BDB0FE9BD1 /* ProjectListView.swift */; };
+		CA803DE17D36F5A7A9DF82A5 /* TerminalViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01FFA5CB342C9E16E22E1C /* TerminalViewWrapper.swift */; };
+		F2D0232025C495E8D625DD02 /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9700AA91EBB8A187BD39B18B /* SessionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		753A3043866F33BDB0FE9BD1 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		8A45B17ADE5DF57B1737520F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		8E418B111A04E0A671611950 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		9700AA91EBB8A187BD39B18B /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		CC01FFA5CB342C9E16E22E1C /* TerminalViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalViewWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				753A3043866F33BDB0FE9BD1 /* ProjectListView.swift */,
+				9700AA91EBB8A187BD39B18B /* SessionView.swift */,
+				CC01FFA5CB342C9E16E22E1C /* TerminalViewWrapper.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -154,6 +160,8 @@
 				BAC1C78E6E19CF4E02ECA020 /* Project.swift in Sources */,
 				C426A25CF710071FBB113D04 /* ProjectListView.swift in Sources */,
 				672D58AE40B4F7B32418E882 /* SSHService.swift in Sources */,
+				F2D0232025C495E8D625DD02 /* SessionView.swift in Sources */,
+				CA803DE17D36F5A7A9DF82A5 /* TerminalViewWrapper.swift in Sources */,
 				14DA06C8FA91F4BBF9DA2A86 /* iostmuxApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

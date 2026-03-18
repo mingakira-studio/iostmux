@@ -48,3 +48,4 @@
 - 实施计划: docs/superpowers/plans/2026-03-18-iostmux-implementation.md
 - SSH 库从 Citadel 改为 SwiftSH（Citadel 不支持交互式 shell）
 - SwiftSH 可能较旧，如编译不过需 fork 或换 libssh2 直接绑定
+- [adhoc] 修改了 /project-next 技能（Step 2a-2: 自动检查 superpowers plan）和新建了 /auto-gtd 技能

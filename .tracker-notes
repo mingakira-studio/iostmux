@@ -1,0 +1,6 @@
+[10:31] on-code 子任务需要先完成（Xcode GUI 操作），code 子任务依赖它们。
+[10:31] OS App 项目：SwiftUI，名称 iostmux，bundle ID com.ming.iostmux，iOS 17.0，portrait only，保存到
+[10:31] ostmux/
+[10:31] le → Add Package Dependencies → https://github.com/migueldeicaza/SwiftTerm → branch main
+[10:31] le → Add Package Dependencies → https://github.com/Frugghi/SwiftSH → branch master
+[10:31] ld。

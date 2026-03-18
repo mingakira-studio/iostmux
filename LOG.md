@@ -8,3 +8,6 @@
   - project-next: Research 阶段新增 Step 2a-2，自动检查 docs/superpowers/plans/ 下的实施计划并作为拆子任务依据
   - auto-gtd: 新建技能，全自动连续推进 GTD 项目（循环调用 /project-next）
   - 起因: iostmux 项目有 superpowers plan，需确保后续 /project-next 拆子任务时参照 plan
+- 10:43 [project-next] 完成「Xcode 项目搭建 + 依赖集成」, 设置 NEXT=SSH 服务层
+  - xcodegen 生成项目，SwiftTerm + Citadel 依赖编译通过
+  - [决策] SSH 库从 SwiftSH 改回 Citadel（SwiftSH 不支持 SPM）

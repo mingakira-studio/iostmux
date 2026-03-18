@@ -17,13 +17,13 @@
 
 ## 任务大纲
 
-- [>] Xcode 项目搭建 + 依赖集成（SwiftTerm, SwiftSH）
-  - [ ] 创建 Xcode 项目，配置 iOS 17+, portrait only
-  - [ ] 添加 SwiftTerm SPM 依赖
-  - [ ] 添加 SwiftSH SPM 依赖
-  - [ ] 创建 Config.swift 硬编码 SSH 参数
-  - [ ] 验证 build 通过
-- [ ] SSH 服务层（SSHService: 命令执行 + 交互 shell）
+- [x] Xcode 项目搭建 + 依赖集成（SwiftTerm, Citadel）(2026-03-18)
+  - [x] 创建 Xcode 项目，配置 iOS 17+, portrait only (xcodegen)
+  - [x] 添加 SwiftTerm SPM 依赖
+  - [x] 添加 Citadel SPM 依赖（SwiftSH 不支持 SPM，改回 Citadel）
+  - [x] 创建 Config.swift 硬编码 SSH 参数
+  - [x] 验证 build 通过
+- [>] SSH 服务层（SSHService: 命令执行 + 交互 shell）
 - [ ] 项目列表页（ProjectListView: 目录列表 + session 状态）
 - [ ] 终端视图（SwiftTerm UIViewRepresentable + SessionView）
 - [ ] 输出过滤状态机（compact/raw 双缓冲切换）
@@ -46,6 +46,5 @@
 <!-- 项目过程中的问题、决策、解决方案 -->
 - 设计文档: docs/superpowers/specs/2026-03-17-iostmux-design.md
 - 实施计划: docs/superpowers/plans/2026-03-18-iostmux-implementation.md
-- SSH 库从 Citadel 改为 SwiftSH（Citadel 不支持交互式 shell）
-- SwiftSH 可能较旧，如编译不过需 fork 或换 libssh2 直接绑定
+- [决策] 2026-03-18: SSH 库选型反转 — 原方案: SwiftSH (libssh2) → 新方案: Citadel (SwiftNIO SSH)（原因: SwiftSH 无 Package.swift 不支持 SPM。Citadel 交互 shell 限制后续用底层 SwiftNIO SSH channel 解决）
 - [adhoc] 修改了 /project-next 技能（Step 2a-2: 自动检查 superpowers plan）和新建了 /auto-gtd 技能

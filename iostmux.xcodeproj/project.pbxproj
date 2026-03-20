@@ -11,6 +11,7 @@
 		074575E2DDF1623430205878 /* BackgroundMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A051020D6DE1E083509DC /* BackgroundMonitor.swift */; };
 		0FE1720E3711517A2A1AAEEF /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = D8FA61509CBB4908CC50BD80 /* SwiftTerm */; };
 		14DA06C8FA91F4BBF9DA2A86 /* iostmuxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF434C2F6CD0BBC78A7C91E /* iostmuxApp.swift */; };
+		1A63D4B9ACFA5C054491EF43 /* SessionCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5ED90FE1B978D5EA60DEF8 /* SessionCache.swift */; };
 		2C2FC672DC242EAC7B4BD6F0 /* VoiceInputButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870516E7D4B76506749F00BE /* VoiceInputButton.swift */; };
 		46DD88C85BFFE5FDFCD691DD /* OutputFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F5B624ADCC768F00A9025 /* OutputFilter.swift */; };
 		532B3EC60563080C8474D618 /* KeySetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D28ADA3CFF98C62C6DB31 /* KeySetupView.swift */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		0307F39102CE1DD54926BC19 /* SSHService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHService.swift; sourceTree = "<group>"; };
 		1BF434C2F6CD0BBC78A7C91E /* iostmuxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iostmuxApp.swift; sourceTree = "<group>"; };
+		1C5ED90FE1B978D5EA60DEF8 /* SessionCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCache.swift; sourceTree = "<group>"; };
 		253A051020D6DE1E083509DC /* BackgroundMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMonitor.swift; sourceTree = "<group>"; };
 		458D28ADA3CFF98C62C6DB31 /* KeySetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySetupView.swift; sourceTree = "<group>"; };
 		6A60B57A7CCDD5B32599D382 /* iostmux.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = iostmux.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +62,7 @@
 				253A051020D6DE1E083509DC /* BackgroundMonitor.swift */,
 				D8CF908A544F523A7E9C0F16 /* KeychainHelper.swift */,
 				898F5B624ADCC768F00A9025 /* OutputFilter.swift */,
+				1C5ED90FE1B978D5EA60DEF8 /* SessionCache.swift */,
 				0307F39102CE1DD54926BC19 /* SSHService.swift */,
 			);
 			path = Services;
@@ -145,6 +148,12 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					D2658969360DA2063ABB5E27 = {
+						DevelopmentTeam = SSG79B289M;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = E13225CD252BCE606D0EF7D8 /* Build configuration list for PBXProject "iostmux" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -183,6 +192,7 @@
 				BAC1C78E6E19CF4E02ECA020 /* Project.swift in Sources */,
 				C426A25CF710071FBB113D04 /* ProjectListView.swift in Sources */,
 				672D58AE40B4F7B32418E882 /* SSHService.swift in Sources */,
+				1A63D4B9ACFA5C054491EF43 /* SessionCache.swift in Sources */,
 				F2D0232025C495E8D625DD02 /* SessionView.swift in Sources */,
 				CA803DE17D36F5A7A9DF82A5 /* TerminalViewWrapper.swift in Sources */,
 				2C2FC672DC242EAC7B4BD6F0 /* VoiceInputButton.swift in Sources */,
@@ -265,6 +275,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SSG79B289M;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Voice input for Claude Code sessions";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Convert speech to text for terminal input";
 				INFOPLIST_KEY_UIBackgroundModes = (
@@ -346,6 +358,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SSG79B289M;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Voice input for Claude Code sessions";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Convert speech to text for terminal input";
 				INFOPLIST_KEY_UIBackgroundModes = (

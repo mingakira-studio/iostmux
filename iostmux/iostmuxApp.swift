@@ -9,7 +9,7 @@ struct iostmuxApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ProjectListView()
+            MainTabView()
                 .onReceive(NotificationCenter.default.publisher(
                     for: UIApplication.didEnterBackgroundNotification
                 )) { _ in

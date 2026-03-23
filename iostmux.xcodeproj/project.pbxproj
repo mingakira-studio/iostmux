@@ -13,34 +13,52 @@
 		14DA06C8FA91F4BBF9DA2A86 /* iostmuxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF434C2F6CD0BBC78A7C91E /* iostmuxApp.swift */; };
 		1A63D4B9ACFA5C054491EF43 /* SessionCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5ED90FE1B978D5EA60DEF8 /* SessionCache.swift */; };
 		2C2FC672DC242EAC7B4BD6F0 /* VoiceInputButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870516E7D4B76506749F00BE /* VoiceInputButton.swift */; };
+		2CEFDD30DBFF4CA59D8EFC64 /* GTDTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974A155861E6EC1836DBCAC /* GTDTrackerView.swift */; };
+		33B7998F2805435C62CA99C8 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87522697D70902505BAA214E /* DashboardView.swift */; };
 		46DD88C85BFFE5FDFCD691DD /* OutputFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F5B624ADCC768F00A9025 /* OutputFilter.swift */; };
+		48950F9F7835903D8D9521E9 /* AreaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65201E97BFA863523156516F /* AreaDetailView.swift */; };
+		4A1EE647475339A920586C90 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBF6CF7E198239969CACCCE /* Area.swift */; };
 		532B3EC60563080C8474D618 /* KeySetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D28ADA3CFF98C62C6DB31 /* KeySetupView.swift */; };
+		53C27DE050FA6BAB922CE803 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FA763135E19AFA0188E269 /* ProjectDetailView.swift */; };
 		672D58AE40B4F7B32418E882 /* SSHService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0307F39102CE1DD54926BC19 /* SSHService.swift */; };
+		7A2EC57502B1FB92CFE128B4 /* UsageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BEC15614089C6A702CB738 /* UsageParser.swift */; };
 		7EC30D8FE0DE197E2771BE6D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CF908A544F523A7E9C0F16 /* KeychainHelper.swift */; };
 		86FF869B67413876C6B884E0 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45B17ADE5DF57B1737520F /* Config.swift */; };
+		9D7E8010FC9B81263CC6CBAB /* EvolveReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C7C7AFC2D821DC41F08E59 /* EvolveReport.swift */; };
 		A1AB801121DB19A1FD3D7237 /* Citadel in Frameworks */ = {isa = PBXBuildFile; productRef = E647007AA6AE3220C9353F2B /* Citadel */; };
+		B583FD8525BA71AA0FAE9CE9 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2358CCCC62E02E232DA4DFFD /* MainTabView.swift */; };
 		BAC1C78E6E19CF4E02ECA020 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E418B111A04E0A671611950 /* Project.swift */; };
 		C426A25CF710071FBB113D04 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753A3043866F33BDB0FE9BD1 /* ProjectListView.swift */; };
 		CA803DE17D36F5A7A9DF82A5 /* TerminalViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01FFA5CB342C9E16E22E1C /* TerminalViewWrapper.swift */; };
+		CC8011E63E4B82D717BD1C09 /* GTDParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F944A552F8849E4717E67 /* GTDParser.swift */; };
 		F2D0232025C495E8D625DD02 /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9700AA91EBB8A187BD39B18B /* SessionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0307F39102CE1DD54926BC19 /* SSHService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHService.swift; sourceTree = "<group>"; };
+		165F944A552F8849E4717E67 /* GTDParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTDParser.swift; sourceTree = "<group>"; };
 		1BF434C2F6CD0BBC78A7C91E /* iostmuxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iostmuxApp.swift; sourceTree = "<group>"; };
 		1C5ED90FE1B978D5EA60DEF8 /* SessionCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCache.swift; sourceTree = "<group>"; };
+		2358CCCC62E02E232DA4DFFD /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		253A051020D6DE1E083509DC /* BackgroundMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMonitor.swift; sourceTree = "<group>"; };
 		458D28ADA3CFF98C62C6DB31 /* KeySetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySetupView.swift; sourceTree = "<group>"; };
+		65201E97BFA863523156516F /* AreaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaDetailView.swift; sourceTree = "<group>"; };
 		6A60B57A7CCDD5B32599D382 /* iostmux.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = iostmux.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		753A3043866F33BDB0FE9BD1 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
+		78FA763135E19AFA0188E269 /* ProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailView.swift; sourceTree = "<group>"; };
 		870516E7D4B76506749F00BE /* VoiceInputButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceInputButton.swift; sourceTree = "<group>"; };
+		87522697D70902505BAA214E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		898F5B624ADCC768F00A9025 /* OutputFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputFilter.swift; sourceTree = "<group>"; };
 		8A45B17ADE5DF57B1737520F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		8E418B111A04E0A671611950 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		9700AA91EBB8A187BD39B18B /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		98C7C7AFC2D821DC41F08E59 /* EvolveReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveReport.swift; sourceTree = "<group>"; };
+		9974A155861E6EC1836DBCAC /* GTDTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTDTrackerView.swift; sourceTree = "<group>"; };
 		AFE10CF9F0946DBC2238BDB9 /* GestureKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureKeyboardView.swift; sourceTree = "<group>"; };
+		B3BEC15614089C6A702CB738 /* UsageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageParser.swift; sourceTree = "<group>"; };
 		CC01FFA5CB342C9E16E22E1C /* TerminalViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalViewWrapper.swift; sourceTree = "<group>"; };
 		D8CF908A544F523A7E9C0F16 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		EFBF6CF7E198239969CACCCE /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,10 +78,12 @@
 			isa = PBXGroup;
 			children = (
 				253A051020D6DE1E083509DC /* BackgroundMonitor.swift */,
+				165F944A552F8849E4717E67 /* GTDParser.swift */,
 				D8CF908A544F523A7E9C0F16 /* KeychainHelper.swift */,
 				898F5B624ADCC768F00A9025 /* OutputFilter.swift */,
 				1C5ED90FE1B978D5EA60DEF8 /* SessionCache.swift */,
 				0307F39102CE1DD54926BC19 /* SSHService.swift */,
+				B3BEC15614089C6A702CB738 /* UsageParser.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -71,6 +91,8 @@
 		A6B65C67A1C5D2270A4E70CA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EFBF6CF7E198239969CACCCE /* Area.swift */,
+				98C7C7AFC2D821DC41F08E59 /* EvolveReport.swift */,
 				8E418B111A04E0A671611950 /* Project.swift */,
 			);
 			path = Models;
@@ -107,8 +129,13 @@
 		ECDC071BF0D381EA84D75B4E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				65201E97BFA863523156516F /* AreaDetailView.swift */,
+				87522697D70902505BAA214E /* DashboardView.swift */,
 				AFE10CF9F0946DBC2238BDB9 /* GestureKeyboardView.swift */,
+				9974A155861E6EC1836DBCAC /* GTDTrackerView.swift */,
 				458D28ADA3CFF98C62C6DB31 /* KeySetupView.swift */,
+				2358CCCC62E02E232DA4DFFD /* MainTabView.swift */,
+				78FA763135E19AFA0188E269 /* ProjectDetailView.swift */,
 				753A3043866F33BDB0FE9BD1 /* ProjectListView.swift */,
 				9700AA91EBB8A187BD39B18B /* SessionView.swift */,
 				CC01FFA5CB342C9E16E22E1C /* TerminalViewWrapper.swift */,
@@ -183,18 +210,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A1EE647475339A920586C90 /* Area.swift in Sources */,
+				48950F9F7835903D8D9521E9 /* AreaDetailView.swift in Sources */,
 				074575E2DDF1623430205878 /* BackgroundMonitor.swift in Sources */,
 				86FF869B67413876C6B884E0 /* Config.swift in Sources */,
+				33B7998F2805435C62CA99C8 /* DashboardView.swift in Sources */,
+				9D7E8010FC9B81263CC6CBAB /* EvolveReport.swift in Sources */,
+				CC8011E63E4B82D717BD1C09 /* GTDParser.swift in Sources */,
+				2CEFDD30DBFF4CA59D8EFC64 /* GTDTrackerView.swift in Sources */,
 				05CA574B468EF28AE10B53CD /* GestureKeyboardView.swift in Sources */,
 				532B3EC60563080C8474D618 /* KeySetupView.swift in Sources */,
 				7EC30D8FE0DE197E2771BE6D /* KeychainHelper.swift in Sources */,
+				B583FD8525BA71AA0FAE9CE9 /* MainTabView.swift in Sources */,
 				46DD88C85BFFE5FDFCD691DD /* OutputFilter.swift in Sources */,
 				BAC1C78E6E19CF4E02ECA020 /* Project.swift in Sources */,
+				53C27DE050FA6BAB922CE803 /* ProjectDetailView.swift in Sources */,
 				C426A25CF710071FBB113D04 /* ProjectListView.swift in Sources */,
 				672D58AE40B4F7B32418E882 /* SSHService.swift in Sources */,
 				1A63D4B9ACFA5C054491EF43 /* SessionCache.swift in Sources */,
 				F2D0232025C495E8D625DD02 /* SessionView.swift in Sources */,
 				CA803DE17D36F5A7A9DF82A5 /* TerminalViewWrapper.swift in Sources */,
+				7A2EC57502B1FB92CFE128B4 /* UsageParser.swift in Sources */,
 				2C2FC672DC242EAC7B4BD6F0 /* VoiceInputButton.swift in Sources */,
 				14DA06C8FA91F4BBF9DA2A86 /* iostmuxApp.swift in Sources */,
 			);
@@ -277,6 +313,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SSG79B289M;
+				INFOPLIST_KEY_LSApplicationQueriesSchemes = (
+					tailscale,
+				);
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Voice input for Claude Code sessions";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Convert speech to text for terminal input";
 				INFOPLIST_KEY_UIBackgroundModes = (
@@ -360,6 +399,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SSG79B289M;
+				INFOPLIST_KEY_LSApplicationQueriesSchemes = (
+					tailscale,
+				);
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Voice input for Claude Code sessions";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Convert speech to text for terminal input";
 				INFOPLIST_KEY_UIBackgroundModes = (

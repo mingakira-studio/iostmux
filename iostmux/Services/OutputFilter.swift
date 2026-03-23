@@ -24,11 +24,39 @@ struct FilteredLine: Identifiable {
 class OutputFilter {
     enum State {
         case show
+        case humanInput
         case toolBlock
         case codeBlock
     }
 
     private(set) var state: State = .show
+
+    /// Detect if text after marker is a tool call.
+    /// Patterns: "Bash(cmd)", "Read 1 file", "Web Search("query")", "Agent(task)"
+    private func isToolCall(_ text: String) -> Bool {
+        // Pattern 1: "Word(" or "Word Word(" — tool call with args in parens
+        // Look for ( within first 30 chars preceded by ASCII letters
+        if let parenIdx = text.firstIndex(of: "(") {
+            let prefix = text[text.startIndex..<parenIdx]
+            if prefix.count <= 25 && prefix.allSatisfy({ $0.isLetter || $0 == " " }) {
+                let words = prefix.split(separator: " ")
+                if let first = words.first, first.first?.isUppercase == true && first.allSatisfy({ $0.isASCII }) {
+                    return true
+                }
+            }
+        }
+        // Pattern 2: "Read 1 file" — known single-word tool + number
+        let firstWord = String(text.split(separator: " ", maxSplits: 1).first ?? "")
+        if OutputFilter.knownSingleTools.contains(firstWord) {
+            return true
+        }
+        return false
+    }
+
+    private static let knownSingleTools: Set<String> = [
+        "Read", "Write", "Edit", "Bash", "Glob", "Grep", "Agent",
+        "Search", "Task", "Skill", "LSP",
+    ]
 
 
     func processLine(_ rawLine: String) -> FilteredLine? {
@@ -65,23 +93,20 @@ class OutputFilter {
         // Permission prompts
         if clean.range(of: "Allow .+\\? \\[Y/n\\]", options: .regularExpression) != nil { return nil }
 
-        // --- Tool call detection ---
+        // --- Tool call detection (marker must be at line start) ---
 
         let toolMarkers = ["⏺", "●"]
         for marker in toolMarkers {
-            if clean.contains(marker) {
-                let afterMarker = clean.components(separatedBy: marker).last?.trimmingCharacters(in: .whitespaces) ?? ""
-                // Tool call = marker followed by ASCII word (English tool name)
-                // AI text = marker followed by CJK/other content
-                if let firstChar = afterMarker.unicodeScalars.first,
-                   CharacterSet.uppercaseLetters.contains(firstChar) {
-                    // Capitalized English word after marker = tool call
+            if clean.hasPrefix(marker) {
+                let afterMarker = String(clean.dropFirst(marker.count)).trimmingCharacters(in: .whitespaces)
+
+                if isToolCall(afterMarker) {
                     state = .toolBlock
                     let words = afterMarker.split(separator: " ", maxSplits: 3).prefix(3)
                     let summary = words.joined(separator: " ")
                     return FilteredLine(text: summary, type: .toolCall)
                 }
-                // Otherwise it's Claude's response text
+                // Not a tool call — it's Claude's response text
                 state = .show
                 return afterMarker.isEmpty ? nil : FilteredLine(text: afterMarker, type: .aiText)
             }
@@ -102,8 +127,8 @@ class OutputFilter {
 
         if state == .toolBlock || state == .codeBlock {
             // Exit conditions: next tool call marker, human prompt, or Claude response marker
-            let hasMarker = ["⏺", "●"].contains(where: { clean.contains($0) })
-            let hasPrompt = clean.hasPrefix("❯") || clean.hasPrefix(">") || clean.contains("❯")
+            let hasMarker = ["⏺", "●"].contains(where: { clean.hasPrefix($0) })
+            let hasPrompt = clean.hasPrefix("❯") || clean.hasPrefix("\u{276F}")
             let hasInfo = clean.hasPrefix("✻") || clean.hasPrefix("*")
 
             if hasMarker || hasPrompt || hasInfo {
@@ -134,23 +159,31 @@ class OutputFilter {
 
         // --- Human input ---
 
-        if clean.hasPrefix("❯") || clean.hasPrefix(">") {
+        if clean.hasPrefix("❯") || clean.hasPrefix("\u{276F}") {
             let text = clean
                 .replacingOccurrences(of: "❯", with: "")
-                .replacingOccurrences(of: ">", with: "")
+                .replacingOccurrences(of: "\u{276F}", with: "")
                 .trimmingCharacters(in: .whitespaces)
-            state = .show
+            state = .humanInput
             return text.isEmpty ? nil : FilteredLine(text: "❯ \(text)", type: .humanInput)
+        }
+
+        // --- Human input continuation (multi-line user message) ---
+
+        if state == .humanInput {
+            return FilteredLine(text: clean, type: .humanInput)
         }
 
         // --- Info lines ---
 
         if clean.hasPrefix("✻") || clean.hasPrefix("*") && clean.contains("for") {
+            state = .show
             return FilteredLine(text: clean, type: .info)
         }
 
         // --- Default: AI text ---
 
+        state = .show
         return FilteredLine(text: clean, type: .aiText)
     }
 
@@ -181,12 +214,21 @@ class OutputFilter {
                         }
                     }
                     if p.hasPrefix("[") {
-                        // Context usage bar: [██████░░░░] or [███████…
+                        // Context usage bar: [██████░░░░] XX% or [███████…
                         let filled = p.filter { $0 == "█" || $0 == "▓" }.count
-                        let empty = p.filter { $0 == "░" || $0 == " " || $0 == "…" }.count
+                        let empty = p.filter { $0 == "░" }.count
                         let total = filled + empty
                         if total > 0 {
                             status.contextUsage = Int(Double(filled) / Double(total) * 100)
+                        }
+                    }
+                }
+                // Also try to find "XX% used" or just "XX%" anywhere in the line
+                if status.contextUsage == 0 {
+                    if let match = clean.range(of: #"(\d+)%\s*(used)?"#, options: .regularExpression) {
+                        let pctStr = clean[match].filter { $0.isNumber }
+                        if let pct = Int(pctStr) {
+                            status.contextUsage = pct
                         }
                     }
                 }

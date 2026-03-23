@@ -66,16 +66,112 @@ class SSHService: ObservableObject {
     func fetchProjects() async throws -> [Project] {
         let dirs = try await execute("ls -1 \(Config.projectsPath)")
         let sessions = try await execute(
-            "tmux list-sessions -F '#{session_name}' 2>/dev/null || true"
+            "tmux list-sessions -F '#{session_name} #{session_activity}' 2>/dev/null || true"
         )
-        let sessionSet = Set(sessions.split(separator: "\n").map(String.init))
-        return dirs.split(separator: "\n")
-            .map { name in
-                let n = String(name).trimmingCharacters(in: .whitespacesAndNewlines)
-                return Project(name: n, hasActiveSession: sessionSet.contains(n))
+        var sessionSet = Set<String>()
+        var activityMap: [String: Int] = [:]
+        for line in sessions.split(separator: "\n") {
+            let parts = line.split(separator: " ", maxSplits: 1)
+            let name = String(parts[0])
+            sessionSet.insert(name)
+            if parts.count > 1, let ts = Int(parts[1]) {
+                activityMap[name] = ts
             }
-            .filter { !$0.name.isEmpty }
-            .sorted()
+        }
+
+        // Detect idle vs active by comparing two captures 1s apart (content change = active)
+        var stateMap: [String: SessionState] = [:]
+        if !sessionSet.isEmpty {
+            // Run all comparisons in parallel using background subshells
+            let cmd = sessionSet.sorted().map { name in
+                "( h1=$(tmux capture-pane -t '\(name)' -p 2>/dev/null | md5); sleep 1; h2=$(tmux capture-pane -t '\(name)' -p 2>/dev/null | md5); if [ \"$h1\" = \"$h2\" ]; then echo 'SESSION:\(name):idle'; else echo 'SESSION:\(name):active'; fi ) &"
+            }.joined(separator: " ") + " wait"
+            let output = try await execute(cmd)
+
+            for line in output.components(separatedBy: "\n") {
+                if line.hasPrefix("SESSION:") {
+                    let parts = line.dropFirst(8).split(separator: ":", maxSplits: 1)
+                    if parts.count == 2 {
+                        let name = String(parts[0])
+                        let state = String(parts[1])
+                        stateMap[name] = state == "active" ? .active : .idle
+                    }
+                }
+            }
+        }
+
+        // Batch extract area + last updated from PROJECT.md files
+        let projectNames = dirs.split(separator: "\n")
+            .map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+
+        var metaMap: [String: (area: String, updated: String)] = [:]
+        if !projectNames.isEmpty {
+            let metaCmd = projectNames.map { name in
+                "echo 'META:\(name):'; head -20 ~/Projects/\(name)/PROJECT.md 2>/dev/null | grep -E '(Area|Last Updated|Status)' || echo ''"
+            }.joined(separator: "; ")
+            let metaOutput = try await execute(metaCmd)
+
+            var currentName = ""
+            var area = ""
+            var updated = ""
+            for line in metaOutput.components(separatedBy: "\n") {
+                if line.hasPrefix("META:") && line.hasSuffix(":") {
+                    if !currentName.isEmpty {
+                        metaMap[currentName] = (area, updated)
+                    }
+                    currentName = String(line.dropFirst(5).dropLast(1))
+                    area = ""
+                    updated = ""
+                } else {
+                    let clean = line.replacingOccurrences(of: "**", with: "").trimmingCharacters(in: .whitespaces)
+                    if clean.contains("Area:") {
+                        area = clean.components(separatedBy: "Area:").last?.trimmingCharacters(in: .whitespaces) ?? ""
+                    }
+                    if clean.contains("Last Updated:") {
+                        updated = clean.components(separatedBy: "Last Updated:").last?.trimmingCharacters(in: .whitespaces) ?? ""
+                    }
+                }
+            }
+            if !currentName.isEmpty {
+                metaMap[currentName] = (area, updated)
+            }
+        }
+
+        let projectNameSet = Set(projectNames)
+        var allProjects = projectNames
+            .map { name in
+                let hasSession = sessionSet.contains(name)
+                let meta = metaMap[name]
+                return Project(
+                    name: name,
+                    hasActiveSession: hasSession,
+                    sessionState: stateMap[name] ?? (hasSession ? .idle : .none),
+                    area: meta?.area ?? "",
+                    lastUpdated: meta?.updated ?? "",
+                    lastActivity: activityMap[name] ?? 0
+                )
+            }
+
+        // Add tmux sessions that don't match a project directory (e.g. general-0)
+        for sessionName in sessionSet {
+            if !projectNameSet.contains(sessionName) {
+                allProjects.append(Project(
+                    name: sessionName,
+                    hasActiveSession: true,
+                    sessionState: stateMap[sessionName] ?? .idle,
+                    area: "session",
+                    lastActivity: activityMap[sessionName] ?? 0
+                ))
+            }
+        }
+
+        return allProjects.sorted {
+                if $0.sortOrder != $1.sortOrder { return $0.sortOrder < $1.sortOrder }
+                if $0.lastActivity != $1.lastActivity { return $0.lastActivity > $1.lastActivity }
+                if $0.lastUpdated != $1.lastUpdated { return $0.lastUpdated > $1.lastUpdated }
+                return $0.name < $1.name
+            }
     }
 
     /// Open interactive PTY shell for a tmux session.
@@ -157,6 +253,22 @@ class SSHService: ObservableObject {
     func sendBytes(_ bytes: [UInt8]) async throws {
         guard let writer = _ttyWriter else { throw SSHError.noActiveShell }
         try await writer.write(ByteBuffer(bytes: bytes))
+    }
+
+    /// Upload file via SFTP
+    func uploadFile(data: Data, remotePath: String) async throws {
+        guard let client else { throw SSHError.notConnected }
+        // Ensure directory exists
+        let dir = (remotePath as NSString).deletingLastPathComponent
+        _ = try? await client.executeCommand("mkdir -p '\(dir)'", inShell: true)
+
+        try await client.withSFTP { sftp in
+            let file = try await sftp.openFile(filePath: remotePath, flags: [.create, .write, .truncate])
+            var buffer = ByteBuffer()
+            buffer.writeBytes(data)
+            try await file.write(buffer)
+            try await file.close()
+        }
     }
 
     func sendWindowChange(cols: Int, rows: Int) async throws {

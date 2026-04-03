@@ -60,6 +60,7 @@ jobs:
           }
 
           if [ "$LABEL" = "auto:analyze" ]; then
+            echo "::group::Codex analysis"
             ANALYSIS=$(codex exec "Analyze this issue concisely.
 
           Issue: $ISSUE_TITLE
@@ -70,7 +71,8 @@ jobs:
           2. Affected files (list paths)
           3. Complexity (simple/medium/complex)
           4. Suggested approach
-          5. Estimated effort" 2>&1 || echo "Analysis failed")
+          5. Estimated effort" 2>&1 | tee /tmp/codex-analysis.log || echo "Analysis failed")
+            echo "::endgroup::"
 
             gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "## AI Analysis
 
@@ -86,10 +88,14 @@ jobs:
             git fetch origin main
             git checkout -B "$BRANCH" origin/main
 
+            echo "::group::Codex execution"
             CODEX_OUTPUT=$(codex exec "Fix this issue. Make minimal, focused changes. Run tests if possible.
 
           Issue: $ISSUE_TITLE
-          Body: $ISSUE_BODY" 2>&1 || echo "Codex execution failed")
+          Body: $ISSUE_BODY" 2>&1 | tee /tmp/codex-output.log || echo "Codex execution failed")
+            echo "::endgroup::"
+            echo "--- Codex output (last 30 lines) ---"
+            tail -30 /tmp/codex-output.log 2>/dev/null || true
 
             if [ -n "$(git status --porcelain)" ]; then
               CHANGED_FILES=$(git diff --name-only HEAD)
@@ -112,15 +118,19 @@ jobs:
 
               PR_NUM=$(echo "$PR_URL" | grep -oE '[0-9]+$' || echo "0")
 
-              gh issue comment "$ISSUE_NUMBER" --repo "$REPO" \
-                --body "PR #$PR_NUM created automatically. Will auto-merge after checks pass.
-
-          **Changed files**: $CHANGED_FILES"
+              CODEX_SUMMARY=$(echo "$CODEX_OUTPUT" | tail -20)
+              COMMENT_FILE="/tmp/issue-agent-comment.md"
+              printf "PR #%s created automatically. Will auto-merge after checks pass.\n\nChanged files: %s\n" "$PR_NUM" "$CHANGED_FILES" > "$COMMENT_FILE"
+              printf "\n<details>\n<summary>Agent analysis</summary>\n\n%s\n</details>\n" "$CODEX_SUMMARY" >> "$COMMENT_FILE"
+              gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body-file "$COMMENT_FILE"
 
               log_result "${LABEL#auto:}" "pr_created" "Changed: $CHANGED_FILES" "$PR_NUM"
             else
-              gh issue comment "$ISSUE_NUMBER" --repo "$REPO" \
-                --body "Auto-fix attempted but no changes were made. Manual intervention needed."
+              # Include Codex analysis in the comment so dashboard can show what agent tried
+              CODEX_SUMMARY=$(echo "$CODEX_OUTPUT" | tail -30)
+              COMMENT_FILE="/tmp/issue-agent-fail.md"
+              printf "Auto-fix attempted but no changes were made. Manual intervention needed.\n\n## Agent Analysis\n\n%s\n\n---\n*Codex analyzed but could not produce a fix.*\n" "$CODEX_SUMMARY" > "$COMMENT_FILE"
+              gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body-file "$COMMENT_FILE"
 
               log_result "${LABEL#auto:}" "no_changes" "Codex ran but made no changes"
 
